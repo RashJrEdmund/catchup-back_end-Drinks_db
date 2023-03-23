@@ -8,41 +8,37 @@ const loginWithEmailPassword = async (email, password) => {
     where: {
       email: email
     }
-  })
+  });
 
-  user = user.dataValues // since users gives a complex object(proxy) with unneccesary key value pairs
+  if(!user) return { status: 401 };
 
-  if(!user) return ('\n {status: 401} user not found \n');
+  user = user.dataValues || user; // since users gives a complex object(proxy) with unneccesary key value pairs
 
-  const match = await bcrypt.compare(password, user.password)
+  const match = await bcrypt.compare(password, user.password);
 
-  if(!match) {
-    console.log(user);
-
-    return (user);
-  };
+  if(!match) return { status: 401 };
 
   const token = jwt.sign(
-    {user_id: user.id, email},
+    { barer_id: user.id, barer_email: user.email }, // giving the token barer his normal id, and email as barer_id / barer_email so i'll use it as reference when i want to log in with token
     JWT_PRIVATE_KEY,
-    { expiresIn: 60 * 60 }
+    { expiresIn: '1h' }
   );
 
-  console.log({ status: 200 });
-
-  return({ user, token })
+  return { user, token }
 }
 
 const loginWithToken = async (token) => {
   if(!token) return { status: 401 }
 
   try {
-    const usersToken = jwt.verify(token, JWT_PRIVATE_KEY);
-    console.log(usersToken);
+    const barer = jwt.verify(token, JWT_PRIVATE_KEY);
+    console.log('this barer', barer);
 
-    const user = await User.findByPk(usersToken.id);
+    let user = await User.findByPk(barer.barer_id); // finding user by primary key which is barer_id as declared in the loginWithEmailPassword() fxn above
 
     if(!user) return { status: 401 }
+
+    user = user.dataValues || user
 
     return user;
   } catch (er) {
@@ -57,9 +53,9 @@ const loginWithApi = async (apikey) => {
     }
   });
 
-  user = user.dataValues
-
   if(!user) return { status: 401 }
+
+  user = user.dataValues || user
   
   return user
 }
