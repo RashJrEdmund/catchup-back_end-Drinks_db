@@ -18,7 +18,7 @@ const {
 
 // loginWithEmailPassword('rash23307@gmail.com', '1234').then((res) => console.log(res));
 
-// loginWithToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJiYXJlcl9pZCI6MTcsImJhcmVyX2VtYWlsIjoicmFzaDIzMzA3QGdtYWlsLmNvbSIsImlhdCI6MTY3OTU3OTA3MywiZXhwIjoxNjc5NTgyNjczfQ.rZX1UYfXozWWFKHgW9sau4umBl15R16Kr9YVvK67-HQ').then((res) => console.log(res));
+loginWithToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJiYXJlcl9pZCI6MTcsImJhcmVyX2VtYWlsIjoicmFzaDIzMzA3QGdtYWlsLmNvbSIsImlhdCI6MTY3OTU3OTA3MywiZXhwIjoxNjc5NTgyNjczfQ.rZX1UYfXozWWFKHgW9sau4umBl15R16Kr9YVvK67-HQ').then((res) => console.log(res));
 
 // loginWithApi('1').then(res => console.log('this api user', res))
 
